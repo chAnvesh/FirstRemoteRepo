@@ -7,7 +7,7 @@ public class AccountMasterBean {
 	
 	private long accNo;
 	private String accType;
-	private int accBal;
+	private long accBal;
 	private LocalDate date;
 	
 	
@@ -31,12 +31,12 @@ public class AccountMasterBean {
 	}
 
 
-	public int getAccBal() {
+	public long getAccBal() {
 		return accBal;
 	}
 
 
-	public void setAccBal(int accBal) {
+	public void setAccBal(long accBal) {
 		this.accBal = accBal;
 	}
 
@@ -59,7 +59,7 @@ public class AccountMasterBean {
 	}
 
 
-	public AccountMasterBean(long accNo, String accType, int accBal,
+	public AccountMasterBean(long accNo, String accType, long accBal,
 			LocalDate date) {
 		super();
 		this.accNo = accNo;
@@ -71,6 +71,13 @@ public class AccountMasterBean {
 
 	public AccountMasterBean() {
 		
+	}
+
+
+	public AccountMasterBean(long accNo, long accBal) {
+		super();
+		this.accNo = accNo;
+		this.accBal = accBal;
 	}
 
 }

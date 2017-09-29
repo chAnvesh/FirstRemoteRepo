@@ -22,9 +22,12 @@ public class NewUI {
 		boolean flagu=false;
 		boolean flagp=false;
 		boolean flag=false;
+		
+		System.out.println("Welocme to Banking Application");
+		
 		do{
 
-			System.out.println("Welocme to Banking Application");
+			
 			System.out.println("Please enter your UserId");
 			userId = sc.nextInt();
 			System.out.println("Please enter your Password");

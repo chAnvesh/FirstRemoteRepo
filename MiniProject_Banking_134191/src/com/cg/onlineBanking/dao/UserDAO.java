@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.cg.onlineBanking.bean.AccountMasterBean;
+import com.cg.onlineBanking.bean.CustomerBean;
 import com.cg.onlineBanking.bean.UserBean;
 import com.cg.onlineBanking.exception.BankingException;
 import com.cg.onlineBanking.util.ConnectionUtil;
@@ -61,7 +63,6 @@ public class UserDAO implements IUserDAO{
 			while(rs.next()){
 				bean=new UserBean();
 				
-				bean.setAccNo(rs.getLong("account_id"));
 				bean.setLockStatus(rs.getString("lock_status"));
 				bean.setLoginPassword(rs.getString("login_password"));
 				bean.setSecretQstn(rs.getString("secret_question"));
@@ -77,6 +78,55 @@ public class UserDAO implements IUserDAO{
 		
 		return bean;
 }
+
+	@Override
+	public boolean changePassword(String password, int userId)
+			throws BankingException {
+		String qry = "UPDATE user_table set login_password=? where user_Id=?";
+		int rs = 0;
+		
+		try(PreparedStatement ps = connect.prepareStatement(qry);) {
+			
+			ps.setString(1, password);
+			ps.setInt(2, userId);
+			
+			rs = ps.executeUpdate();
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		return (rs>0)?true:false;
+	}
+	
+	
+	public ArrayList<AccountMasterBean> getAccountDetails(int userId) throws BankingException{
+		
+		String qry = "SELECT account_id,account_balance FROM account_master where account_id="
+				+ "ANY (SELECT account_id FROM USER_TABLE WHERE USER_ID = ? )";
+					
+		ArrayList<AccountMasterBean> list = new ArrayList<>();
+		try(PreparedStatement ps = connect.prepareStatement(qry);) 
+			{
+				ps.setInt(1, userId);
+						
+				ResultSet rs = ps.executeQuery();
+					
+				while(rs.next()){
+					
+					long accNo = rs.getLong("account_id");
+					long accBal = rs.getLong("account_balance");
+				
+					list.add(new AccountMasterBean(accNo,accBal));
+				}
+				
+			} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+			}
+				return list; 	
+	}
+	
 }
 /*	@Override
 	public UserBean validateUser(int userId) throws BankingException {

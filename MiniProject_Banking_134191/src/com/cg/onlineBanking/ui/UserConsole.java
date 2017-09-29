@@ -2,13 +2,19 @@ package com.cg.onlineBanking.ui;
 
 import java.util.Scanner;
 
+import com.cg.onlineBanking.bean.AccountMasterBean;
 import com.cg.onlineBanking.bean.UserBean;
+import com.cg.onlineBanking.exception.BankingException;
+import com.cg.onlineBanking.service.IUserService;
+import com.cg.onlineBanking.service.UserService;
 
 public class UserConsole {
 	
 	private UserBean user;
+	private IUserService service;
 	public UserConsole(UserBean user) {
 		this.user = user; 
+		service = new UserService();
 	}
 
 	public void start() {
@@ -17,7 +23,17 @@ public class UserConsole {
 		
 		Scanner sc=new Scanner(System.in);
 		int choice;
+		boolean flag = false;
 		System.out.println("Welcome");
+		
+		try {
+			for(AccountMasterBean list:service.getAccountDetails(user.getUserId())){
+			System.out.println(list);
+			}
+		} catch (BankingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		System.out.println("1.View statements");
 		System.out.println("2.Chage communication details");
@@ -47,7 +63,30 @@ public class UserConsole {
 			
 		}
 		case 6:{
-			
+			do {
+			System.out.println("Change Your Password");
+			System.out.println("Please enter your Old password");
+			String old = sc.next();
+			if(old.equals(user.getLoginPassword())) {
+			System.out.println("Please enter your new password (Maximum 15 characters)");
+			String newpass = sc.next();
+			System.out.println("Please re-enter your new password");
+			String confpass = sc.next();
+			if(newpass.equals(confpass)) {
+				try {
+					flag = service.changePassword(confpass,user.getUserId());
+				} catch (BankingException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				flag = false;
+			}
+			} else {
+				flag = false;
+			}
+			}while(!flag);
 		}
 
 		}

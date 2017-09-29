@@ -4,7 +4,7 @@ public class CustomerBean {
 
 	private long accNo;
 	private String custName;
-	private String eamil;
+	private String email;
 	private String address;
 	private String panCard;
 	
@@ -12,11 +12,11 @@ public class CustomerBean {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerBean(String custName, String eamil, String address,
+	public CustomerBean(String custName, String email, String address,
 			String panCard) {
 		super();
 		this.custName = custName;
-		this.eamil = eamil;
+		this.email = email;
 		this.address = address;
 		this.panCard = panCard;
 	}
@@ -37,12 +37,12 @@ public class CustomerBean {
 		this.custName = custName;
 	}
 
-	public String getEamil() {
-		return eamil;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEamil(String eamil) {
-		this.eamil = eamil;
+	public void setEamil(String email) {
+		this.email = email;
 	}
 
 	public String getAddress() {
@@ -64,7 +64,7 @@ public class CustomerBean {
 	@Override
 	public String toString() {
 		return "CustomerBean [accNo=" + accNo + ", custName=" + custName
-				+ ", eamil=" + eamil + ", address=" + address + ", panCard="
+				+ ", email=" + email + ", address=" + address + ", panCard="
 				+ panCard + "]";
 	}
 	

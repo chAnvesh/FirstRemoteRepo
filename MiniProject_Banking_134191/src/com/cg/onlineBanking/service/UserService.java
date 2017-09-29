@@ -2,6 +2,7 @@ package com.cg.onlineBanking.service;
 
 import java.util.ArrayList;
 
+import com.cg.onlineBanking.bean.AccountMasterBean;
 import com.cg.onlineBanking.bean.UserBean;
 import com.cg.onlineBanking.dao.IUserDAO;
 import com.cg.onlineBanking.dao.UserDAO;
@@ -50,7 +51,19 @@ public class UserService implements IUserService {
 	}
 
 	
+	@Override
+	public boolean changePassword(String password, int userId) throws BankingException {
 		
+		return userDAO.changePassword(password, userId);
+	}
+
+
+	@Override
+	public ArrayList<AccountMasterBean> getAccountDetails(int userId)
+			throws BankingException {
+		// TODO Auto-generated method stub
+		return userDAO.getAccountDetails(userId);
+	}
 		
 		
 		
